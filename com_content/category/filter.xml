@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_CONTENT_TAGFILTER_BLOG_TITLE" option="COM_CONTENT_TAGFILTER_VIEW_BLOG_OPTION">
+	<layout title="COM_CONTENT_FILTERVIEW_MENUTYPE" option="COM_CONTENT_FILTERVIEW_MENUTYPE_OPTION">
 		<help key = "JHELP_MENUS_MENU_ITEM_ARTICLE_CATEGORY_BLOG" />
 		<message>
-			<![CDATA[COM_CONTENT_TAGFILTER_VIEW_BLOG_DESC]]>
+			<![CDATA[COM_CONTENT_FILTERVIEW_MENUTYPE_OPTION_DESC]]>
 		</message>
 	</layout>
 
@@ -170,17 +170,58 @@
 		</fieldset>
 
 		<fieldset name="advanced" label="JGLOBAL_CATEGORY_OPTIONS">
+
 			<field
-					name="bloglayout"
+					name="donationcode"
+					label="COM_CONTENT_FILTERVIEW_CCC_DONATE"
+					type="spacer"
+			/>
+
+
+			<field
+					name="filterlayout"
 					type="spacer"
 					class="text"
-					label="JGLOBAL_SUBSLIDER_BLOG_LAYOUT_LABEL"
+					label="COM_CONTENT_FILTERVIEW_FILTERLAYOUT"
 			/>
 
 			<field
-					name="bootstrapcols"
+					name="layoutmode"
 					type="list"
-					label="COM_CONTENT_TAGFILTER_BOOTSTRAP_COLS_LBL"
+					label="COM_CONTENT_FILTERVIEW_LAYOUTMODE_LBL"
+					default="square"
+			>
+				<option value="square">COM_CONTENT_FILTERVIEW_MASONRY_SQUARES</option>
+				<option value="masonry">COM_CONTENT_FILTERVIEW_MASONRY</option>
+			</field>
+
+			<field
+					name="gridcontainer"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_GRIDCONTAINER_LBL"
+					default="container"
+			>
+				<option value="container-fluid">COM_CONTENT_FILTERVIEW_GRIDCONTAINER_FLUID</option>
+				<option value="container">COM_CONTENT_FILTERVIEW_GRIDCONTAINER_NORMAL</option>
+			</field>
+
+			<field
+					name="cssframework"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_CSSFRAMEWORK_LBL"
+					default="bs4"
+			>
+				<option value="none">COM_CONTENT_FILTERVIEW_CSSFRAMEWORK_NONE</option>
+				<option value="bs2">COM_CONTENT_FILTERVIEW_CSSFRAMEWORK_BS2</option>
+				<option value="bs3">COM_CONTENT_FILTERVIEW_CSSFRAMEWORK_BS3</option>
+				<option value="bs4">COM_CONTENT_FILTERVIEW_CSSFRAMEWORK_BS4</option>
+			</field>
+
+
+			<field
+					name="gridcols"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_GRIDCOLS_LBL"
 					default="4"
 			>
 				<option value="12">1</option>
@@ -192,15 +233,254 @@
 			</field>
 
 			<field
-					name="customfieldsfilter"
+					name="introimagemode"
 					type="list"
-					label="COM_CONTENT_TAGFILTER_CUSTOMFIELDSFILTER_LABEL"
+					label="COM_CONTENT_FILTERVIEW_INTROIMAGEMODE_LBL"
+					default="bg"
+			>
+				<option value="bg">COM_CONTENT_FILTERVIEW_IMAGEMODE_BG</option>
+				<option value="content">COM_CONTENT_FILTERVIEW_IMAGEMODE_CONTENT</option>
+				<option value="">JHIDE</option>
+			</field>
+
+			<field
+					name="fullimagemode"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_FULLIMAGEMODE_LBL"
+					default="square"
+			>
+				<option value="bg">COM_CONTENT_FILTERVIEW_IMAGEMODE_BG_OVERLAY</option>
+				<option value="content">COM_CONTENT_FILTERVIEW_IMAGEMODE_CONTENT</option>
+				<option value="">Hide</option>
+			</field>
+
+
+			<field
+					name="filteroptions"
+					type="spacer"
+					class="text"
+					label="COM_CONTENT_FILTERVIEW_FILTEROPTIONS_LBL"
+			/>
+
+			<field
+					name="showfilters"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_SHOWFILTERS_LBL"
 					default="1"
+
+			>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="showfilterheadlines"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_SHOWFILTERHEADLINES_LBL"
+					default="1"
+					showon="showfilters:1"
+			>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="tagsfilter"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_TAGSFILTER_LABEL"
+					default="1"
+					showon="showfilters:1"
 			>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
 
+			<field
+					name="customfieldsfilter"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_CUSTOMFIELDSFILTER_LABEL"
+					default="1"
+					showon="showfilters:1"
+			>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+			<field
+					name="excludefields"
+					type="text"
+					label="COM_CONTENT_FILTERVIEW_EXCLUDEFIELDS_LABEL"
+					size="10"
+					showon="customfieldsfilter:1"
+			/>
+
+			<field
+					name="contentoptions"
+					type="spacer"
+					class="text"
+					label="COM_CONTENT_FILTERVIEW_CONTENTOPTIONS_LBL"
+			/>
+
+
+			<field
+					name="afterdisplaytitle"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_AFTERDISPLAYTITLE_EVENT"
+					default="1"
+			>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="beforedisplaycontent"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_BEFOREDISPLAYCONTENT_EVENT"
+					default="1"
+			>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="afterdisplaycontent"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_AFTERDISPLAYCONTENT_EVENT"
+					default="1"
+			>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="showlinks"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_SHOWLINKS_LBL"
+					default="1"
+			>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+
+			<field
+					name="show_readmore"
+					type="list"
+					description="JGLOBAL_SHOW_READMORE_DESC"
+					label="JGLOBAL_SHOW_READMORE_LABEL"
+					useglobal="true"
+			>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+
+
+			<field
+					name="overlayoptions"
+					type="spacer"
+					class="text"
+					label="COM_CONTENT_FILTERVIEW_OVERLAYOPTIONS_LBL"
+			/>
+
+			<field
+					name="contentoverlay"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_SHOWOVERLAY_LBL"
+					default="1"
+			>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+			<field
+					name="overlayopacity"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_OVERLAYOPACITY_LBL"
+					default="1"
+					showon="contentoverlay:1"
+			>
+				<option value="0.10">10%</option>
+				<option value="0.20">20%</option>
+				<option value="0.30">30%</option>
+				<option value="0.40">40%</option>
+				<option value="0.50">50%</option>
+				<option value="0.60">60%</option>
+				<option value="0.70">70%</option>
+				<option value="0.80">80%</option>
+				<option value="0.90">90%</option>
+				<option value="1">100%</option>
+			</field>
+
+
+			<field
+					name="colors"
+					type="spacer"
+					class="text"
+					label="COM_CONTENT_FILTERVIEW_COLOROPTIONS_LBL"
+			/>
+
+			<field
+					name="checkedbuttoncolor"
+					type="color"
+					label="COM_CONTENT_FILTERVIEW_CHECKEDBUTTONCOLOR_LBL"
+					default="#000"
+					showon="showfilters:1"
+			/>
+
+
+			<field
+					name="griditemcolor"
+					type="color"
+					label="COM_CONTENT_FILTERVIEW_GRIDITEMCOLOR_LBL"
+					default="#ccc"
+			/>
+
+			<field
+					name="overlaycolor"
+					type="color"
+					label="COM_CONTENT_FILTERVIEW_OVERLAYCOLOR_LBL"
+					default="#af18b5"
+					showon="contentoverlay:1"
+			/>
+
+			<field
+					name="textcolor"
+					type="color"
+					label="COM_CONTENT_FILTERVIEW_OVERLAYTEXTCOLOR_LBL"
+					default="#fff"
+					showon="contentoverlay:1"
+			/>
+
+			<field
+					name="linkcolor"
+					type="color"
+					label="COM_CONTENT_FILTERVIEW_OVERLAYLINKCOLOR_LBL"
+					default="#fff"
+			/>
+
+
+
+			<field
+					name="buttonclass"
+					type="text"
+					label="COM_CONTENT_FILTERVIEW_FILTERBTNCLASS_LBL"
+					size="10"
+			/>
+
+			<field
+					name="checkedclass"
+					type="text"
+					label="COM_CONTENT_FILTERVIEW_FILTERBTNCHECKEDCLASS_LBL"
+					size="10"
+					default="is-checked"
+			/>
+
+			<field
+					name="bloglayout"
+					type="spacer"
+					class="text"
+					label="JGLOBAL_SUBSLIDER_BLOG_LAYOUT_LABEL"
+			/>
 
 			<field
 					name="num_leading_articles"
@@ -565,17 +845,6 @@
 				<option value="use_article">COM_CONTENT_FIELD_VALUE_USE_ARTICLE_SETTINGS</option>
 				<option value="0">JHIDE</option>
 				<option	value="1">JSHOW</option>
-			</field>
-
-			<field
-					name="show_readmore"
-					type="list"
-					description="JGLOBAL_SHOW_READMORE_DESC"
-					label="JGLOBAL_SHOW_READMORE_LABEL"
-					useglobal="true"
-			>
-				<option value="0">JHIDE</option>
-				<option value="1">JSHOW</option>
 			</field>
 
 			<field
