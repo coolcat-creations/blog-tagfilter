@@ -244,6 +244,26 @@
 			</field>
 
 			<field
+					name="zoomintroimage"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_ZOOMINTROIMG_LBL"
+					default=""
+					showon="introimagemode:bg"
+			>
+				<option value="">JNO</option>
+				<option value="1.10">110%</option>
+				<option value="1.20">120%</option>
+				<option value="22.30">130%</option>
+				<option value="2.40">140%</option>
+				<option value="2.50">150%</option>
+				<option value="2.60">160%</option>
+				<option value="2.70">170%</option>
+				<option value="2.80">180%</option>
+				<option value="2.90">190%</option>
+				<option value="2">200%</option>
+			</field>
+
+			<field
 					name="fullimagemode"
 					type="list"
 					label="COM_CONTENT_FILTERVIEW_FULLIMAGEMODE_LBL"
@@ -321,6 +341,16 @@
 					label="COM_CONTENT_FILTERVIEW_CONTENTOPTIONS_LBL"
 			/>
 
+
+			<field
+					name="tagscontent"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_SHOWTAGSINCONTENT_EVENT"
+					default="1"
+			>
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
 
 			<field
 					name="afterdisplaytitle"

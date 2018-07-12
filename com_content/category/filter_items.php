@@ -16,12 +16,15 @@ defined('_JEXEC') or die;
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHtml::_('behavior.core');
 JHtml::_('formbehavior.chosen', 'select');
+$doc = Factory::getDocument();
+
 
 // Get the user object.
 $user = Factory::getUser();
 
 $introimagemode = $this->params->get('introimagemode', 'bg');
 $fullimagemode = $this->params->get('fullimagemode', 'bg');
+
 $afterdisplaytitle = $this->params->get('afterdisplaytitle', '1');
 $beforedisplaycontent = $this->params->get('beforedisplaycontent', '1');
 $afterdisplaycontent = $this->params->get('afterdisplaycontent', '1');
@@ -29,6 +32,9 @@ $excludefields = $this->params->get('excludefields', false);
 $cssframework = $this->params->get('cssframework', 'bs4');
 $readmore = $this->params->get('read_more', '1');
 $showlinks = $this->params->get('showlinks', '1');
+$tagscontent = $this->params->get('tagscontent', '1');
+
+
 $params = $this->item->params;
 
 if ($cssframework == 'bs4') {
@@ -45,6 +51,12 @@ if ($cssframework == 'bs2') {
 	$mediumclass = 'span' . $this->params->get('gridcols', '6');
 }
 
+if ($cssframework == 'none') {
+	$mediumclass = '';
+	$smallclass = '';
+}
+
+
 if ($excludefields) {
 	$excludefields = explode(",", $excludefields);
 }
@@ -52,6 +64,15 @@ if ($excludefields) {
 $tags = $this->item->tags->itemTags;
 $images = json_decode($this->item->images);
 $urls = json_decode($this->item->urls);
+
+if ($introimagemode == 'bg') {
+	$introstyle = 'style="background-image:url(' . $images->image_intro . ');"';
+}
+
+if ($fullimagemode == 'bg') {
+	$fullstyle = 'style="background-image:url(' . $images->image_fulltext . '); background-size:cover;"';
+}
+
 
 Factory::getDocument()->addScriptDeclaration("
 		var resetFilter = function() {
@@ -76,64 +97,56 @@ foreach ($this->item->jcfields as $jcfield) {
 
 ?> ">
 
-	<div class="grid-item-content square"
-		<?php if ($introimagemode == 'bg') {
-			echo 'style="background-image:url(' . $images->image_intro . '); background-size:cover;"';
-		}
-		?>
-	>
-		<div class="content">
+	<div class="grid-item-content square">
 
-			<div class="overlay text"
-				<?php if ($fullimagemode == 'bg') {
-					echo 'style="background-image:url(' . $images->image_fulltext . '); background-size:cover;"';
-				}
-				?>
-			>
+		<div class="content" <?php echo $introstyle; ?>>
 
-				<div class="row p-3">
+			<div class="overlay" <?php echo $fullstyle; ?>>
 
-					<div class="col-12">
-						<?php echo LayoutHelper::render('joomla.content.blog_style_default_item_title', $this->item); ?>
+				<div class="row p-3 text">
+
+					<div class="<?php echo $smallclass; ?> text-center">
+						<?php echo LayoutHelper::render('joomla.content.filtertitle', $this->item); ?>
+
 						<?php if ($this->item->event->afterDisplayTitle && $afterdisplaytitle) { ?>
 							<?php echo $this->item->event->afterDisplayTitle; ?>
 						<?php } ?>
 					</div>
 
 					<?php if ($this->item->event->beforeDisplayContent && $beforedisplaycontent) { ?>
-						<div class="col-12">
+						<div class="<?php echo $smallclass; ?>" text-center>
 							<?php echo $this->item->event->beforeDisplayContent; ?>
 						</div>
 					<?php } ?>
 
 					<?php if ($introimagemode == 'content') {
-						echo '<div class="col-6">';
+						echo '<div class="' . $smallclass .' text-center">';
 						echo LayoutHelper::render('joomla.content.intro_image', $this->item);
 						echo '</div>';
 					}
 					?>
 
 					<?php if ($fullimagemode == 'content') {
-						echo '<div class="col-6">';
+						echo '<div class="' . $smallclass .' text-center">';
 						echo LayoutHelper::render('joomla.content.full_image', $this->item);
 						echo '</div>';
 					}
 					?>
 
 					<?php if ($this->item->introtext) { ?>
-						<div class="col-12">
+						<div class="<?php echo $smallclass; ?> text-center">
 							<?php echo $this->item->introtext; ?>
 						</div>
 					<?php } ?>
 
 					<?php if ($this->item->event->afterDisplayContent && $afterdisplaycontent) { ?>
-						<div class="col-12">
+						<div class="<?php echo $smallclass; ?>">
 							<?php echo $this->item->event->afterDisplayContent; ?>
 						</div>
 					<?php } ?>
 
-					<?php if ($this->item->tags->itemTags) { ?>
-						<div class="col-12">
+					<?php if ($this->item->tags->itemTags && $tagscontent == '1') { ?>
+						<div class="<?php echo $smallclass; ?>">
 							<ul class="tags">
 								<?php
 								foreach ($this->item->tags->itemTags as $tag) {
@@ -156,15 +169,15 @@ foreach ($this->item->jcfields as $jcfield) {
 							$link = new JUri(JRoute::_('index.php?option=com_users&view=login&Itemid=' . $itemId, false));
 							$link->setVar('return', base64_encode(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language)));
 						endif; ?>
-						<div class="col-12">
-							<?php echo JLayoutHelper::render('joomla.content.readmore', array('item' => $this->item, 'params' => $params, 'link' => $this->link)); ?>
+						<div class="<?php echo $smallclass; ?>">
+							<?php echo JLayoutHelper::render('joomla.content.filterreadmore', array('item' => $this->item, 'params' => $params, 'link' => $this->link)); ?>
 						</div>
 					<?php endif;
 
 					if ($showlinks && $urls && (!empty($urls->urla) || !empty($urls->urlb) || !empty($urls->urlc))) :
 
 						?>
-						<div class="col-12">
+						<div class="<?php echo $smallclass; ?>">
 							<?php
 
 							$urlarray = array(

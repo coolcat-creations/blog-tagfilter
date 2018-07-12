@@ -43,6 +43,10 @@ $buttonclass = $this->params->get('buttonclass', 'btn btn-primary');
 $checkedclass = $this->params->get('checkedclass', 'btn btn-primary');
 $excludefields = $this->params->get('excludefields', false);
 $cssframework = $this->params->get('cssframework', 'bs4');
+$zoomintroimage = $this->params->get('zoomintroimage', false);
+$zoomtext = 0.9 / $zoomintroimage;
+$introimagemode = $this->params->get('introimagemode', 'bg');
+
 
 if ($cssframework == 'bs4') {
 	$mediumclass = 'col-md-' . $this->params->get('gridcols', '6');
@@ -66,11 +70,85 @@ $css = "";
 
 $css .= ".is-checked {background:$checkedbuttoncolor;}";
 $css .= ".element-item {background:$griditemcolor;}";
+$css .= ".overlay .btn-outline-light:hover {color:$overlaycolor;}";
 
 if ($layoutmode == 'square') :
 	$css .= '.square {width:100%;}';
 	$css .= '.square:after {content: "";  display: block; padding-bottom: 100%; } ';
 	$css .= '.content {position: absolute; width: 100%; height: 100%;}';
+endif;
+
+if ($zoomintroimage) :
+	$css .=
+<<<CSS
+	.grid-item-content {
+		overflow: hidden;
+		position: relative;
+		cursor: pointer;
+	}
+
+	.content {
+		height: 100%;
+		width: 100%;
+		background-size: cover;
+		background-repeat: no-repeat;
+		-webkit-transition: all .5s;
+		-moz-transition: all .5s;
+		-o-transition: all .5s;
+		transition: all .5s;
+	}
+	
+	.text {
+		-ms-transform: scale(0.9);
+		-moz-transform: scale(0.9);
+		-webkit-transform: scale(0.9);
+		-o-transform: scale(0.9);
+		transform: scale(0.9);
+		-webkit-transition: all .5s;
+		-moz-transition: all .5s;
+		-o-transition: all .5s;
+		transition: all .5s;
+	}
+
+	.grid-item-content:hover .content, .grid-item-content:focus .content {
+		-ms-transform: scale($zoomintroimage);
+		-moz-transform: scale($zoomintroimage);
+		-webkit-transform: scale($zoomintroimage);
+		-o-transform: scale($zoomintroimage);
+		transform: scale($zoomintroimage);
+	}
+	
+		.grid-item-content:hover .text, .grid-item-content:focus .text {
+		-ms-transform: scale($zoomtext);
+		-moz-transform: scale($zoomtext);
+		-webkit-transform: scale($zoomtext);
+		-o-transform: scale($zoomtext);
+		transform: scale($zoomtext);
+	}
+
+	.grid-item-content:hover .content:before, .grid-item-content:focus .content:before {
+		display: block;
+	}
+
+
+	.grid-item-content:hover a, .grid-item-content:focus a {
+		display: block;
+	}
+
+/*.content:before {
+    content: "";
+    display: none;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(52,73,94,0.75);
+}*/
+
+CSS;
+
+
 endif;
 
 
@@ -79,9 +157,10 @@ if ($contentoverlay == 1) :
 						text-align: center;	background:rgba(' . $r .',' . $g .',' . $b .',' .$a .');
 						width:100%;	height:100%;}';
 	$css .= '.grid-item-content:hover .overlay { opacity: 1; cursor: pointer;}';
-	$css .= '.text { color: ' . $textcolor .'}';
-	$css .= '.overlay a { color: ' . $linkcolor .'}';
+	$css .= '.text { color: ' . $textcolor .'; padding:10%;}';
+	$css .= '.overlay .text a { color: ' . $linkcolor .'}';
 endif;
+
 
 JHtml::_('jquery.framework');
 JHtml::_('script', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js', array('version' => 'auto', 'relative' => true), array('defer' => true, 'async' => false));
