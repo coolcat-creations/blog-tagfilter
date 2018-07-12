@@ -66,11 +66,11 @@ $images = json_decode($this->item->images);
 $urls = json_decode($this->item->urls);
 
 if ($introimagemode == 'bg') {
-	$introstyle = 'style="background-image:url(' . $images->image_intro . ');"';
+	$introstyle = 'style="background-image:url(\'' . $images->image_intro . '\'); background-size:cover;"';
 }
 
 if ($fullimagemode == 'bg') {
-	$fullstyle = 'style="background-image:url(' . $images->image_fulltext . '); background-size:cover;"';
+	$fullstyle = 'style="background-image:url(\'' . $images->image_fulltext . '\'); background-size:cover;"';
 }
 
 
@@ -120,14 +120,14 @@ foreach ($this->item->jcfields as $jcfield) {
 					<?php } ?>
 
 					<?php if ($introimagemode == 'content') {
-						echo '<div class="' . $smallclass .' text-center">';
+						echo '<div class="' . $smallclass . ' text-center">';
 						echo LayoutHelper::render('joomla.content.intro_image', $this->item);
 						echo '</div>';
 					}
 					?>
 
 					<?php if ($fullimagemode == 'content') {
-						echo '<div class="' . $smallclass .' text-center">';
+						echo '<div class="' . $smallclass . ' text-center">';
 						echo LayoutHelper::render('joomla.content.full_image', $this->item);
 						echo '</div>';
 					}
@@ -170,7 +170,7 @@ foreach ($this->item->jcfields as $jcfield) {
 							$link->setVar('return', base64_encode(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language)));
 						endif; ?>
 						<div class="<?php echo $smallclass; ?>">
-							<?php echo JLayoutHelper::render('joomla.content.filterreadmore', array('item' => $this->item, 'params' => $params, 'link' => $this->link)); ?>
+							<?php echo JLayoutHelper::render('joomla.content.filterreadmore', array('item' => $this->item, 'params' => $params, 'link' => $link)); ?>
 						</div>
 					<?php endif;
 
