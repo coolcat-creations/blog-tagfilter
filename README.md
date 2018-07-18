@@ -16,3 +16,4 @@ Todos:
 - having an own tab for Filter Settings
 - Showing Label instead of Alias for the heading
 - Order of the filters (?) ...
+- Optimize Classes for CSS frameworks beside BS4
