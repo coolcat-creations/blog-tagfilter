@@ -73,7 +73,7 @@ defined('_JEXEC') or die;
 
 		/* show the tagparents as headlines */
 		foreach ($parentnames as $parentname) {
-			echo '<div class="ui-group my-3 mx-auto ' . $smallclass . '">';
+			echo '<div class="ui-group my-3 ' . $smallclass . '">';
 			if ($showfilterheadlines == '1') :
 				echo '<h3 class="parent">' . ucwords($parentname) . '</h3>';
 			endif;

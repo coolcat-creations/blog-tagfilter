@@ -256,7 +256,7 @@ function replacechars($string)
 endif; ?>
 
 <div id="msg-box" class="alert alert-primary" style="display:none;">
-	<div><?php echo JText::_('JGLOBAL_SELECT_NO_RESULTS_MATCH');?></div>
+	<div><?php echo JText::_('COM_CONTENT_FILTERVIEW_NO_RESULT');?></div>
 </div>
 
 <div id="isotopeContainer"></div>
