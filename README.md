@@ -10,10 +10,7 @@ I am doing that for fun and to support the community. However, if you feel like 
 ![demo](https://raw.githubusercontent.com/coolcat-creations/blog-tagfilter/master/demo.gif)
 
 Todos:
-- Adding a custom message if nothing is found
-- (Maybe) giving the possibility to define the hover color of the buttons
 - Translate some missing strings
-- having an own tab for Filter Settings
 - Showing Label instead of Alias for the heading
 - Order of the filters (?) ...
 - Optimize Classes for CSS frameworks beside BS4
