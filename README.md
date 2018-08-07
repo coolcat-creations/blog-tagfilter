@@ -1,9 +1,12 @@
-# blog-tagfilter
+# Joomla Blog Override with tag and custom field filters
+
 This menutype for a blog shows items in an isotope with the possibility to filter by tag. 
-(Bootstrap 4)
+
+It's optimized for Bootstrap 4, however there are options to change the css framework - just report if you have issues with the alternate frameworks.
+
 If your tags are nested they are grouped by their parent tag.
 
-You can enable also filtering by custom field. Then the values coming from the custom fields have to be comma-seperated values.
+You can enable also filtering by custom field. Then the values coming from the custom fields have to be comma-seperated values. Custom Fields that should not be filtered can be excluded.
 
 I am doing that for fun and to support the community. However, if you feel like I should have more time for fun things you can support me by "donating" something. I will send you an invoice if needed. https://www.paypal.me/coolcatcreations/
 
@@ -14,3 +17,4 @@ Todos:
 - Showing Label instead of Alias for the heading
 - Order of the filters (?) ...
 - Optimize Classes for CSS frameworks beside BS4
+- Bugfixing
