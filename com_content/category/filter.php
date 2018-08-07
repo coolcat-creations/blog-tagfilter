@@ -8,6 +8,7 @@
  */
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die;
 
@@ -120,7 +121,7 @@ endif;
 
 if ($zoomintroimage) :
 	$css .=
-<<<CSS
+		<<<CSS
 
 
 	
@@ -250,9 +251,15 @@ function replacechars($string)
 
 <?php if ($showfilters == '1') :
 
-include 'filter_filter.php';
+	include 'filter_filter.php';
 
 endif; ?>
+
+<div id="msg-box" class="alert alert-primary" style="display:none;">
+	<div><?php echo JText::_('JGLOBAL_SELECT_NO_RESULTS_MATCH');?></div>
+</div>
+
+<div id="isotopeContainer"></div>
 
 <div id="<?php echo $containerid; ?>" class="<?php echo $gridcontainer; ?>">
 	<div class="row grid mt-5">
@@ -320,6 +327,12 @@ endif; ?>
 			var filterValue = concatValues(filters);
 			// set filter for Isotope
 			$grid.isotope({filter: filterValue});
+
+			// display message box if no filtered items
+			if ( !$grid.data('isotope').filteredItems.length ) {
+				jQuery('#msg-box').show();
+			}
+
 		});
 
 // change is-checked class on buttons
@@ -343,6 +356,7 @@ endif; ?>
 		$grid.imagesLoaded().progress(function () {
 			$grid.isotope('layout');
 		});
+
 
 	});
 </script>

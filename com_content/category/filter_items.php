@@ -57,6 +57,16 @@ $tags = $this->item->tags->itemTags;
 $images = json_decode($this->item->images);
 $urls = json_decode($this->item->urls);
 
+$filters = "";
+foreach ($tags as $tag) {
+	$filters .= ' ' . $tag->alias . ' ';
+}
+foreach ($this->item->jcfields as $jcfield) {
+	if (!in_array($jcfield->id, $this->excludefields)) {
+		$filters .= ' ' . specialchars($jcfield->value) . ' ';
+	}
+}
+
 if ($this->introimagemode == 'bg') {
 	$introstyle = 'style="background-image:url(\'' . $images->image_intro . '\'); background-size:cover;"';
 }
@@ -74,20 +84,7 @@ Factory::getDocument()->addScriptDeclaration("
 ?>
 
 
-<div class="element-item <?php echo $smallclass . ' ' . $mediumclass; ?>
-
-<?php
-foreach ($tags as $tag) {
-	echo ' ' . $tag->alias . ' ';
-}
-
-foreach ($this->item->jcfields as $jcfield) {
-	if (!in_array($jcfield->id, $this->excludefields)) {
-		echo ' ' . specialchars($jcfield->value) . ' ';
-	}
-}
-
-?> ">
+<div class="element-item <?php echo $smallclass . ' ' . $mediumclass; ?> <?php echo $filters; ?> ">
 
 	<div class="grid-item-content square">
 
