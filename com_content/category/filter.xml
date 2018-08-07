@@ -169,7 +169,7 @@
 			/>
 		</fieldset>
 
-		<fieldset name="advanced" label="JGLOBAL_CATEGORY_OPTIONS">
+		<fieldset name="filter" label="COM_CONTENT_FILTERVIEW_OPTIONS">
 
 			<field
 					name="donationcode"
@@ -194,6 +194,13 @@
 				<option value="square">COM_CONTENT_FILTERVIEW_MASONRY_SQUARES</option>
 				<option value="masonry">COM_CONTENT_FILTERVIEW_MASONRY</option>
 			</field>
+
+			<field
+					name="containerid"
+					type="text"
+					label="COM_CONTENT_FILTERVIEW_CONTAINERID_LBL"
+					default="isotope"
+			/>
 
 			<field
 					name="gridcontainer"
@@ -343,6 +350,30 @@
 
 
 			<field
+					name="introtextposition"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_INTROTEXTPOS_LBL"
+					default="overlay"
+			>
+				<option value="standard">COM_CONTENT_FILTERVIEW_INTROTEXTPOS_STANDARD</option>
+				<option value="overlay">COM_CONTENT_FILTERVIEW_INTROTEXTPOS_OVERLAY</option>
+				<option value="both">COM_CONTENT_FILTERVIEW_INTROTEXTPOS_BOTH</option>
+				<option value="">JNO</option>
+			</field>
+
+			<field
+					name="titleposition"
+					type="list"
+					label="COM_CONTENT_FILTERVIEW_TITLEPOS_LBL"
+					default="overlay"
+			>
+				<option value="standard">COM_CONTENT_FILTERVIEW_INTROTEXTPOS_STANDARD</option>
+				<option value="overlay">COM_CONTENT_FILTERVIEW_INTROTEXTPOS_OVERLAY</option>
+				<option value="both">COM_CONTENT_FILTERVIEW_INTROTEXTPOS_BOTH</option>
+				<option value="">JNO</option>
+			</field>
+
+			<field
 					name="tagscontent"
 					type="list"
 					label="COM_CONTENT_FILTERVIEW_SHOWTAGSINCONTENT_EVENT"
@@ -462,7 +493,7 @@
 					name="griditemcolor"
 					type="color"
 					label="COM_CONTENT_FILTERVIEW_GRIDITEMCOLOR_LBL"
-					default="#ccc"
+					default=""
 			/>
 
 			<field
@@ -472,6 +503,15 @@
 					default="#af18b5"
 					showon="contentoverlay:1"
 			/>
+
+
+			<field
+					name="introcolor"
+					type="color"
+					label="COM_CONTENT_FILTERVIEW_INTROCOLOR_LBL"
+					default="transparent"
+			/>
+
 
 			<field
 					name="textcolor"
@@ -505,7 +545,10 @@
 					default="is-checked"
 			/>
 
-			<field
+		</fieldset>
+		<fieldset name="advanced" label="JGLOBAL_CATEGORY_OPTIONS">
+
+		<field
 					name="bloglayout"
 					type="spacer"
 					class="text"

@@ -26,50 +26,90 @@ $afterDisplayContent = trim(implode("\n", $results));
 $introcount = count($this->intro_items);
 $counter = 0;
 $doc = Factory::getDocument();
+$css = "";
 
+
+
+/* Layout Options */
+$containerid = $this->params->get('containerid', 'isotope');
+
+$gridcontainer = $this->params->get('gridcontainer', 'container');
 $layoutmode = $this->params->get('layoutmode', 'square');
+
+$introcolor = $this->params->get('introcolor', 'transparent');
+$griditemcolor = $this->params->get('griditemcolor', '');
+
+
+$this->introimagemode = $this->params->get('introimagemode', 'bg');
+$this->fullimagemode = $this->params->get('fullimagemode', 'bg');
+$this->afterdisplaytitle = $this->params->get('afterdisplaytitle', '1');
+$this->beforedisplaycontent = $this->params->get('beforedisplaycontent', '1');
+$this->afterdisplaycontent = $this->params->get('afterdisplaycontent', '1');
+$this->excludefields = $this->params->get('excludefields', false);
+if ($this->excludefields) {
+	$this->excludefields = explode(",", $this->excludefields);
+}
+
+/* Filter Options */
 $showfilters = $this->params->get('showfilters', '1');
 $showfilterheadlines = $this->params->get('showfilterheadlines', '1');
+$showfieldfilter = $this->params->get('customfieldsfilter', '1');
+
+$excludefields = $this->params->get('excludefields', false);
+
+$buttonclass = $this->params->get('buttonclass', 'btn btn-primary');
+$checkedclass = $this->params->get('checkedclass', 'btn btn-primary');
+$checkedbuttoncolor = $this->params->get('checkedbuttoncolor', '#000');
+
+
+/* Overlay Options */
+$contentoverlay = $this->params->get('contentoverlay', '1');
 $overlaycolor = $this->params->get('overlaycolor', '#af18b5');
 list($r, $g, $b) = sscanf($overlaycolor, "#%02x%02x%02x");
 $a = $this->params->get('overlayopacity', '0.75');
 $textcolor = $this->params->get('textcolor', '#fff');
 $linkcolor = $this->params->get('linkcolor', '#fff');
-$griditemcolor = $this->params->get('griditemcolor', '#ccc');
-$contentoverlay = $this->params->get('contentoverlay', '1');
-$checkedbuttoncolor = $this->params->get('checkedbuttoncolor', '#000');
-$gridcontainer = $this->params->get('gridcontainer', 'container');
-$buttonclass = $this->params->get('buttonclass', 'btn btn-primary');
-$checkedclass = $this->params->get('checkedclass', 'btn btn-primary');
-$excludefields = $this->params->get('excludefields', false);
-$cssframework = $this->params->get('cssframework', 'bs4');
+
 $zoomintroimage = $this->params->get('zoomintroimage', false);
-$zoomtext = 0.9 / $zoomintroimage;
-$introimagemode = $this->params->get('introimagemode', 'bg');
+$zoomtext = 1 / $zoomintroimage;
+
+if ($contentoverlay == 1) :
+	$css .= '.overlay { transition: .5s ease; opacity: 0; 
+						text-align: center;	background:rgba(' . $r .',' . $g .',' . $b .',' .$a .');
+						width:100%;	height:100%;}';
+	$css .= '.grid-item-content:hover .overlay { opacity: 1; cursor: pointer;}';
+	$css .= '.text { color: ' . $textcolor .'; padding:10%;}';
+	$css .= '.overlay .text a { color: ' . $linkcolor .'}';
+endif;
+
+/* check the css framework and assign framework specific classes */
+
+$this->cssframework = $this->params->get('cssframework', 'bs4');
+$this->gridcols = $this->params->get('gridcols', '6');
 
 
 if ($cssframework == 'bs4') {
-	$mediumclass = 'col-md-' . $this->params->get('gridcols', '6');
-	$smallclass = 'col-12';
+	$this->mediumclass = 'col-lg-' . $this->gridcols  . ' col-md-' . $this->gridcols  . ' col-sm-6';
+	$this->smallclass = 'col-12';
 }
 
 if ($cssframework == 'bs3') {
-	$mediumclass = 'col-md-' . $this->params->get('gridcols', '6');
-	$smallclass = 'col-xs-12';
+	$this->mediumclass = 'col-md-' . $this->gridcols  . ' col-sm-6';
+	$this->smallclass = 'col-xs-12';
 }
 
 if ($cssframework == 'bs2') {
-	$mediumclass = 'span' . $this->params->get('gridcols', '6');
+	$this->mediumclass = 'span' . $this->gridcols  . ' span6';
 }
 
-if ($excludefields) {
-	$excludefields = explode(",",$excludefields);
+if ($cssframework == 'none') {
+	$this->mediumclass = '';
+	$this->smallclass = '';
 }
 
-$css = "";
 
 $css .= ".is-checked {background:$checkedbuttoncolor;}";
-$css .= ".element-item {background:$griditemcolor;}";
+$css .= ".element-item {background:$griditemcolor; margin-bottom:30px;}";
 $css .= ".overlay .btn-outline-light:hover {color:$overlaycolor;}";
 
 if ($layoutmode == 'square') :
@@ -81,6 +121,9 @@ endif;
 if ($zoomintroimage) :
 	$css .=
 <<<CSS
+
+
+	
 	.grid-item-content {
 		overflow: hidden;
 		position: relative;
@@ -99,11 +142,11 @@ if ($zoomintroimage) :
 	}
 	
 	.text {
-		-ms-transform: scale(0.9);
-		-moz-transform: scale(0.9);
-		-webkit-transform: scale(0.9);
-		-o-transform: scale(0.9);
-		transform: scale(0.9);
+		-ms-transform: scale(0);
+		-moz-transform: scale(0);
+		-webkit-transform: scale(0);
+		-o-transform: scale(0);
+		transform: scale(0);
 		-webkit-transition: all .5s;
 		-moz-transition: all .5s;
 		-o-transition: all .5s;
@@ -134,17 +177,44 @@ if ($zoomintroimage) :
 	.grid-item-content:hover a, .grid-item-content:focus a {
 		display: block;
 	}
+	
+	.standard {
+		width:100%;	
+		height:35%;
+		background: $introcolor;
+		color: #fff;
+		position: absolute;
+		bottom:0;
+		padding:1rem;
+	}
+	
+	.overlay {
+	height: 100%;
+width: 100%;
+display: table;
+	}
+	
+	.btn-outline-secondary {
+	border-color:#fff;
+	}
+	
+	
+	.overlay .text a.btn-outline-secondary:hover {
+	background:#fff;
+	color: rgba(255,89,0,1);
+	border:none;
+	}
+	
+	.overlay > div {
+	display: table-cell;
+	vertical-align: middle;
+	}
+	
+	.grid-item-content:hover .standard {
+		opacity: 0;
+		transition: .5s ease; opacity: 0; 
+	}
 
-/*.content:before {
-    content: "";
-    display: none;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: rgba(52,73,94,0.75);
-}*/
 
 CSS;
 
@@ -152,14 +222,7 @@ CSS;
 endif;
 
 
-if ($contentoverlay == 1) :
-	$css .= '.overlay { transition: .5s ease; opacity: 0; 
-						text-align: center;	background:rgba(' . $r .',' . $g .',' . $b .',' .$a .');
-						width:100%;	height:100%;}';
-	$css .= '.grid-item-content:hover .overlay { opacity: 1; cursor: pointer;}';
-	$css .= '.text { color: ' . $textcolor .'; padding:10%;}';
-	$css .= '.overlay .text a { color: ' . $linkcolor .'}';
-endif;
+
 
 
 JHtml::_('jquery.framework');
@@ -185,142 +248,21 @@ function replacechars($string)
 
 ?>
 
-<?php if ($showfilters == '1') : ?>
+<?php if ($showfilters == '1') :
 
-	<?php
-	$uniquetag = array();
-	$uniquepaths = array();
-	$parentnames = array();
-	$uniquefields = array();
+include 'filter_filter.php';
 
-	foreach ($this->intro_items as $item) {
+endif; ?>
 
-		if ($this->params->get('tagsfilter', '1')) :
-
-			$tags = $item->tags->itemTags;
-
-			foreach ($tags as $tag) {
-				$uniquetag[$tag->id] = $tag;
-				$uniquepaths[$tag->id] = $tag->path;
-			}
-
-			/* get the uniquepaths and push their value into an array */
-
-			foreach ($uniquepaths as $id => $uniquepath) {
-				list($tagparents, $child) = explode("/", $uniquepath);
-				if (!in_array($tagparents, $parentnames, true)) {
-					array_push($parentnames, $tagparents);
-				}
-			}
-
-		endif;
-
-
-		if ($this->params->get('customfieldsfilter', '1')) :
-			/* get the fields and push their value into an array */
-
-			$fields = $item->jcfields;
-
-			foreach ($fields as $field) {
-				if (!in_array($field->id, $excludefields)) {
-					$uniquefields[$field->name] = $field;
-					$fieldvalues[$field->name][] = array();
-				}
-			}
-
-			foreach ($uniquefields as $name => $uniquefield) {
-				$myvalues = explode(", ", $uniquefield->value);
-
-				foreach ($myvalues as $myvalue) {
-					if (!in_array($myvalue, $fieldvalues[$uniquefield->name], true) && (!empty($myvalue))) {
-						array_push($fieldvalues[$uniquefield->name], $myvalue);
-					}
-				}
-				$fieldvalues[$uniquefield->name] = array_filter($fieldvalues[$uniquefield->name]);
-			}
-		endif;
-	}
-
-	?>
-
-	<div class="filters">
-
-		<?php
-
-		/* show the tagparents as headlines */
-		foreach ($parentnames
-
-		         as $parentname) {
-			echo '<div class="ui-group my-3">';
-			if ($showfilterheadlines == '1') :
-				echo '<h3 class="parent">' . ucwords($parentname) . '</h3>';
-			endif;
-			?>
-			<div class="button-group filters-button-group" data-filter-group="<?php echo $parentname; ?>">
-				<button class="<?php echo $buttonclass; ?> <?php echo $checkedclass; ?> m-1"
-				        data-filter=""><?php echo JText::_('CCC_FILTER_SHOW_ALL'); ?></button>
-				<?php
-				foreach ($uniquetag as $id => $tag) {
-					/* put the tags below their parents */
-					list($parent, $child) = explode("/", $tag->path);
-					if ($parentname == $parent) { ?>
-						<button class="<?php echo $buttonclass; ?> m-1" data-filter=".<?php echo $tag->alias; ?>">
-							<?php echo $tag->title; ?>
-						</button>
-						<?php
-					}
-				}
-				?>
-			</div>
-			<?php
-			echo '</div>';
-		}
-
-		/* show the fieldnames as headlines */
-		foreach ($uniquefields as $id => $usedfield) {
-			if (!empty($fieldvalues[$usedfield->name])) {
-				echo '<div class="ui-group my-3">';
-				if ($showfilterheadlines == '1') :
-					echo '<h3 class="parent">' . ucwords($usedfield->name) . '</h3>';
-				endif;
-				?>
-				<div class="button-group filters-button-group" data-filter-group="<?php echo replacechars($usedfield->name); ?>">
-				<button class="<?php echo $buttonclass; ?> <?php echo $checkedclass; ?> m-1"
-				        data-filter=""><?php echo JText::_('CCC_FILTER_SHOW_ALL'); ?></button>
-				<?php
-			}
-
-			/* show the fieldvalues below their headlines */
-			foreach ($fieldvalues as $name => $myfields) {
-				if ($name == $usedfield->name) {
-					foreach ($myfields as $myfield) { ?>
-						<button class="<?php echo $buttonclass; ?> m-1" data-filter=".<?php echo specialchars($myfield); ?>">
-							<?php echo $myfield; ?>
-						</button>
-						<?php
-					}
-				}
-			} ?>
-			</div>
-			<?php
-			echo '</div>';
-
-		}
-		?>
-
-	</div>
-
-<?php endif; ?>
-
-<div class="<?php echo $gridcontainer; ?>">
-	<div class="row no-gutters grid mt-5">
+<div id="<?php echo $containerid; ?>" class="<?php echo $gridcontainer; ?>">
+	<div class="row grid mt-5">
 		<?php if ($this->params->get('show_page_heading')) : ?>
 			<h1>
 				<?php echo $this->escape($this->params->get('page_heading')); ?>
 			</h1>
 		<?php endif; ?>
 
-		<div class="grid-sizer <?php echo $mediumclass; ?>"></div>
+		<div class="grid-sizer <?php echo $this->mediumclass; ?>"></div>
 		<div class="gutter-sizer"></div>
 
 		<?php

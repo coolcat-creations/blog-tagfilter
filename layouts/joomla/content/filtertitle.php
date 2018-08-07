@@ -16,7 +16,6 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 ?>
 
 <?php if ($displayData->state == 0 || $params->get('show_title') || ($params->get('show_author') && !empty($displayData->author ))) : ?>
-	<div class="page-header">
 		<?php if ($params->get('show_title')) : ?>
 			<h3 itemprop="name">
 				<?php if ($params->get('link_titles') && ($params->get('access-view') || $params->get('show_noauth', '0') == '1')) : ?>
@@ -44,5 +43,4 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 		) : ?>
 			<span class="label label-warning"><?php echo JText::_('JEXPIRED'); ?></span>
 		<?php endif; ?>
-	</div>
 <?php endif; ?>
