@@ -331,7 +331,10 @@ endif; ?>
 			// display message box if no filtered items
 			if ( !$grid.data('isotope').filteredItems.length ) {
 				jQuery('#msg-box').show();
+			} else {
+				jQuery('#msg-box').hide();
 			}
+
 
 		});
 
