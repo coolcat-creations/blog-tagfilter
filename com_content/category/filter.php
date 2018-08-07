@@ -110,7 +110,7 @@ if ($cssframework == 'none') {
 
 
 $css .= ".is-checked {background:$checkedbuttoncolor;}";
-$css .= ".element-item {background:$griditemcolor; margin-bottom:30px;}";
+$css .= ".element-item {background:$griditemcolor;}";
 $css .= ".overlay .btn-outline-light:hover {color:$overlaycolor;}";
 
 if ($layoutmode == 'square') :
