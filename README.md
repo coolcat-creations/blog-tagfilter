@@ -12,6 +12,8 @@ To enable the override:
 1) put the com_content folder into the html/ folder in your frontend template
 2) put the contents of the language_overrides folders into their destination (administrator/languages/overrides and languages/overrides)
 3) place the layouts folder and its contents into the html/ folder in your frontend template
+4) Create a new Menuitem of type "Blog - Isotope Filter" - If it's not available you missed something in step 1-3 
+5) Set up the Menuitem
 
 I am doing that for fun and to support the community. However, if you feel like I should have more time for fun things you can support me by "donating" something. I will send you an invoice if needed. https://www.paypal.me/coolcatcreations/
 
