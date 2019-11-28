@@ -358,7 +358,7 @@
 				<option value="standard">COM_CONTENT_FILTERVIEW_INTROTEXTPOS_STANDARD</option>
 				<option value="overlay">COM_CONTENT_FILTERVIEW_INTROTEXTPOS_OVERLAY</option>
 				<option value="both">COM_CONTENT_FILTERVIEW_INTROTEXTPOS_BOTH</option>
-				<option value="">JNO</option>
+				<option value="0">JNO</option>
 			</field>
 
 			<field
@@ -370,7 +370,7 @@
 				<option value="standard">COM_CONTENT_FILTERVIEW_INTROTEXTPOS_STANDARD</option>
 				<option value="overlay">COM_CONTENT_FILTERVIEW_INTROTEXTPOS_OVERLAY</option>
 				<option value="both">COM_CONTENT_FILTERVIEW_INTROTEXTPOS_BOTH</option>
-				<option value="">JNO</option>
+				<option value="0">JNO</option>
 			</field>
 
 			<field
