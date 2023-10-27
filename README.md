@@ -1,4 +1,4 @@
-# Joomla Blog Override with tag and custom field filters
+# Joomla 3 Blog Override with tag and custom field filters
 
 This menutype for a blog shows items in an isotope with the possibility to filter by tag. 
 
